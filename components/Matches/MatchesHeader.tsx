@@ -16,6 +16,7 @@ interface MatchesHeaderProps {
   filteredMatches: number;
   isLoading?: boolean;
   resetFilters?: () => void;
+  isDisabled?: boolean;
 }
 
 const MatchesHeader = ({
@@ -30,6 +31,7 @@ const MatchesHeader = ({
   filteredMatches,
   isLoading = false,
   resetFilters,
+  isDisabled = false,
 }: MatchesHeaderProps) => {
   const lastUpdated = useMemo(() => {
     return new Date().toLocaleTimeString("sr-RS", { hour12: false });
@@ -49,14 +51,16 @@ const MatchesHeader = ({
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full p-4 lg:p-6 bg-gray-800/50 border-b border-gray-700">
+      className="w-full p-6 lg:p-6 bg-gray-800/50 border-b border-gray-700">
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <h1 className="text-2xl font-bold text-white">Mečevi</h1>
           <div className="flex items-center gap-2 text-sm text-gray-400">
             <span>
-              Ažurirano: {lastUpdated} | Prikazano: {filteredMatches} od{" "}
-              {totalMatches} mečeva
+              Ažurirano: {lastUpdated} | Prikazano:{" "}
+              {isDisabled
+                ? "0 mečeva"
+                : `${filteredMatches} od ${totalMatches} mečeva`}
             </span>
             {isLoading && (
               <div className="flex items-center gap-1">
@@ -81,7 +85,10 @@ const MatchesHeader = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Unesite ime tima..."
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-lg sm:text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              disabled={isDisabled}
+              className={`w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-lg sm:text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                isDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             />
           </div>
 
@@ -96,7 +103,10 @@ const MatchesHeader = ({
               name="league-select"
               value={selectedLeague}
               onChange={(e) => setSelectedLeague(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-lg sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent [&>option]:text-lg [&>option]:py-2 [&>option]:px-3 [&>option]:bg-gray-700 [&>option]:text-white">
+              disabled={isDisabled}
+              className={`w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-lg sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent [&>option]:text-lg [&>option]:py-2 [&>option]:px-3 [&>option]:bg-gray-700 [&>option]:text-white ${
+                isDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}>
               <option value="all">Sve lige</option>
               {availableLeagues.map((league, index) => (
                 <option key={index} value={league}>
@@ -117,7 +127,10 @@ const MatchesHeader = ({
               name="sort-select"
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as SortOption)}
-              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-lg sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent [&>option]:text-lg [&>option]:py-2 [&>option]:px-3 [&>option]:bg-gray-700 [&>option]:text-white">
+              disabled={isDisabled}
+              className={`w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-lg sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent [&>option]:text-lg [&>option]:py-2 [&>option]:px-3 [&>option]:bg-gray-700 [&>option]:text-white ${
+                isDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}>
               {sortOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -133,7 +146,12 @@ const MatchesHeader = ({
             {resetFilters && (
               <button
                 onClick={resetFilters}
-                className="w-full px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-lg sm:text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
+                disabled={isDisabled}
+                className={`w-full px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-lg sm:text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                  isDisabled
+                    ? "opacity-50 cursor-not-allowed hover:bg-red-600"
+                    : ""
+                }`}>
                 Resetuj sve
               </button>
             )}

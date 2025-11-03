@@ -10,9 +10,16 @@ interface MatchCardProps {
   isNew?: boolean;
   isRemoving?: boolean;
   isLoading?: boolean;
+  fixedHeight?: boolean;
 }
 
-const MatchCard = ({ match, isNew, isRemoving, isLoading }: MatchCardProps) => {
+const MatchCard = ({
+  match,
+  isNew,
+  isRemoving,
+  isLoading,
+  fixedHeight,
+}: MatchCardProps) => {
   const {
     formatTime,
     getAnimationStyles,
@@ -33,6 +40,7 @@ const MatchCard = ({ match, isNew, isRemoving, isLoading }: MatchCardProps) => {
         relative rounded-lg overflow-hidden
         ${getAnimationStyles()}
         ${isLoading ? "opacity-50 pointer-events-none" : ""}
+        ${fixedHeight ? "h-full" : ""}
       `}>
       {(isNew || isRemoving) && (
         <motion.div
