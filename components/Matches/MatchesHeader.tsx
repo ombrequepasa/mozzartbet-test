@@ -1,7 +1,7 @@
 "use client";
 
+import { memo, useMemo } from "react";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
 import { SortOption } from "@/hooks/useSortAndFilterMatches";
 
 interface MatchesHeaderProps {
@@ -193,4 +193,4 @@ const MatchesHeader = ({
   );
 };
 
-export default MatchesHeader;
+export default memo(MatchesHeader);

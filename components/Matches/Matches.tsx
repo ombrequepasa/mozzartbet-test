@@ -1,7 +1,7 @@
 "use client";
 
+import { memo } from "react";
 import dynamic from "next/dynamic";
-
 import useMatches from "@/hooks/useMatches";
 
 const MatchesHeader = dynamic(() => import("./MatchesHeader"), { ssr: false });
@@ -52,4 +52,4 @@ const Matches = () => {
   );
 };
 
-export default Matches;
+export default memo(Matches);

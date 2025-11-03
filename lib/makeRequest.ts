@@ -19,13 +19,27 @@ const makeRequest = async ({ method, url, body }: RequestParams) => {
     data: body,
   };
 
-  try {
-    const response = await axios(config);
-    return response.data;
-  } catch (error) {
-    console.error(`Error ${method.toLowerCase()}ing:`, error);
-    throw error;
+  const maxRetries = 3;
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await axios(config);
+      return response.data;
+    } catch (error) {
+      lastError = error;
+      console.error(
+        `Error ${method.toLowerCase()}ing (attempt ${attempt}/${maxRetries}):`,
+        error
+      );
+
+      if (attempt === maxRetries) {
+        break;
+      }
+    }
   }
+
+  throw lastError;
 };
 
 export default makeRequest;

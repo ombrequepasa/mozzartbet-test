@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Spinner from "../Spinner";
 import MatchCard from "./MatchCard";
@@ -18,21 +19,23 @@ const MatchList = ({
   newMatches,
   removingMatches,
 }: MatchListProps) => {
+  if (allMatches.length === 0 && !isLoading) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <div className="text-gray-400 text-lg">Nema dostupnih mečeva</div>
+      </div>
+    );
+  }
+  if (isLoading && matches.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-32">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
   return (
     <div className="w-full">
       <div className="p-4 lg:p-6">
-        {allMatches.length === 0 && !isLoading && (
-          <div className="flex justify-center items-center h-32">
-            <div className="text-gray-400 text-lg">Nema dostupnih mečeva</div>
-          </div>
-        )}
-
-        {isLoading && matches.length === 0 && (
-          <div className="flex justify-center items-center h-32">
-            <Spinner size="lg" />
-          </div>
-        )}
-
         <motion.div
           layout
           transition={{
@@ -56,4 +59,4 @@ const MatchList = ({
     </div>
   );
 };
-export default MatchList;
+export default memo(MatchList);

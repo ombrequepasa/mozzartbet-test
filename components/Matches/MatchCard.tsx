@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { motion } from "framer-motion";
 import useMatchCardLayoutHelper from "@/hooks/useMatchCardLayoutHelper";
 import Spinner from "../Spinner";
@@ -116,7 +117,7 @@ const MatchCard = ({
             <span className="text-gray-400 text-xs font-medium uppercase tracking-wide">
               {match.league}
             </span>
-            <span className="text-gray-300 text-xs">
+            <span className="text-gray-300 text-xs truncate max-w-42">
               {formatTime(match.matchTime)} • {match.venue}
             </span>
           </div>
@@ -178,4 +179,4 @@ const MatchCard = ({
   );
 };
 
-export default MatchCard;
+export default memo(MatchCard);
