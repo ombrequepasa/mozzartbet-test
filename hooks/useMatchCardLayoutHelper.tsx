@@ -84,7 +84,7 @@ const useMatchCardLayoutHelper = (
         };
       case "upcoming":
         return {
-          text: "NAJAVLJENO",
+          text: "PREDSTOJEĆI",
           className:
             "bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-1 rounded-full text-xs",
           icon: <Calendar className="w-3 h-3 text-blue-400" />,

@@ -121,21 +121,26 @@ const MatchCard = ({
             </span>
           </div>
           <div className="flex items-center gap-2">
-            {match.status === "LIVE" && statusInfo.icon && (
-              <motion.div
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [1, 0.7, 1],
-                }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="flex items-center">
-                {statusInfo.icon}
-              </motion.div>
-            )}
-            {match.status !== "LIVE" && statusInfo.icon && (
-              <span className="flex items-center">{statusInfo.icon}</span>
-            )}
-            <span className={statusInfo.className}>{statusInfo.text}</span>
+            <span className={`flex items-center gap-2 ${statusInfo.className}`}>
+              {statusInfo.icon && (
+                <>
+                  {match.status === "LIVE" ? (
+                    <motion.span
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [1, 0.7, 1],
+                      }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                      className="flex items-center">
+                      {statusInfo.icon}
+                    </motion.span>
+                  ) : (
+                    <span className="flex items-center">{statusInfo.icon}</span>
+                  )}
+                </>
+              )}
+              {statusInfo.text}
+            </span>
           </div>
         </div>
 

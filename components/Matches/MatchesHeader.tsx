@@ -39,6 +39,7 @@ const MatchesHeader = ({
   }, [isLoading]);
 
   const sortOptions: { value: SortOption; label: string }[] = [
+    { value: "none", label: "Sortiraj" },
     { value: "time-asc", label: "Vreme ↑" },
     { value: "time-desc", label: "Vreme ↓" },
     { value: "alphabetical-asc", label: "Alfabetski A-Z" },

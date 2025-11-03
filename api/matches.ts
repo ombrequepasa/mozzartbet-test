@@ -5,5 +5,6 @@ export const getMatches = async () => {
     method: "GET",
     url: `/matches`,
   });
+
   return response.matches ?? [];
 };

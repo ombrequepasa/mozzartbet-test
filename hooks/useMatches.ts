@@ -56,7 +56,7 @@ const useMatches = () => {
         setNewMatches(addedIds);
         setTimeout(() => {
           setNewMatches(new Set());
-        }, 2500);
+        }, 1000);
       }
 
       if (removedIds.size > 0) {
@@ -65,7 +65,7 @@ const useMatches = () => {
           setMatches(newMatchesData);
           setRemovingMatches(new Set());
           previousMatchesRef.current = newMatchesData;
-        }, 2500);
+        }, 1000);
       } else {
         setMatches(newMatchesData);
         if (previousMatchesRef.current.length === 0 || addedIds.size === 0) {
@@ -73,7 +73,7 @@ const useMatches = () => {
         } else {
           setTimeout(() => {
             previousMatchesRef.current = newMatchesData;
-          }, 2500);
+          }, 1000);
         }
       }
     },

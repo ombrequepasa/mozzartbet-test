@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { Match } from "@/types/matches";
 
 export type SortOption =
+  | "none"
   | "time-asc"
   | "time-desc"
   | "alphabetical-asc"
@@ -12,7 +13,7 @@ export type SortOption =
 
 export const searchTermAtom = atom<string>("");
 export const selectedLeagueAtom = atom<string>("all");
-export const sortOptionAtom = atom<SortOption>("time-asc");
+export const sortOptionAtom = atom<SortOption>("none");
 
 const useSortAndFilterMatches = (matches: Match[]) => {
   const [searchTerm, setSearchTerm] = useAtom(searchTermAtom);
@@ -27,7 +28,7 @@ const useSortAndFilterMatches = (matches: Match[]) => {
   const resetFilters = () => {
     setSearchTerm("");
     setSelectedLeague("all");
-    setSortOption("time-asc");
+    setSortOption("none");
   };
 
   const filteredAndSortedMatches = useMemo(() => {
@@ -46,12 +47,16 @@ const useSortAndFilterMatches = (matches: Match[]) => {
       filtered = filtered.filter((match) => match.league === selectedLeague);
     }
 
+    if (sortOption === "none") {
+      return filtered;
+    }
+
     const sorted = [...filtered].sort((a, b) => {
       switch (sortOption) {
         case "time-asc":
-          return (
-            new Date(a.matchTime).getTime() - new Date(b.matchTime).getTime()
-          );
+          const timeA = new Date(a.matchTime).getTime();
+          const timeB = new Date(b.matchTime).getTime();
+          return timeA - timeB;
 
         case "time-desc":
           return (
@@ -78,7 +83,6 @@ const useSortAndFilterMatches = (matches: Match[]) => {
           return 0;
       }
     });
-
     return sorted;
   }, [matches, searchTerm, selectedLeague, sortOption]);
 
