@@ -5,7 +5,7 @@ export type Match = {
   homeScore: number;
   homeTeam: string;
   lastUpdated: string;
-  leadue: string;
+  league: string;
   matchTime: string;
   source: string;
   sport: string;

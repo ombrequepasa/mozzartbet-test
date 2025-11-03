@@ -4,6 +4,7 @@ import { atom } from "jotai";
 import { getMatches } from "@/api/matches";
 import { matchesAtom } from "@/store/matches";
 import { Match } from "@/types/matches";
+import useSortAndFilterMatches from "./useSortAndFilterMatches";
 
 const newMatchesAtom = atom<Set<string>>(new Set<string>());
 const removingMatchesAtom = atom<Set<string>>(new Set<string>());
@@ -14,6 +15,18 @@ const useMatches = () => {
   const [newMatches, setNewMatches] = useAtom(newMatchesAtom);
   const [removingMatches, setRemovingMatches] = useAtom(removingMatchesAtom);
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
+
+  const {
+    filteredAndSortedMatches,
+    searchTerm,
+    setSearchTerm,
+    selectedLeague,
+    setSelectedLeague,
+    sortOption,
+    setSortOption,
+    availableLeagues,
+    resetFilters,
+  } = useSortAndFilterMatches(matches);
 
   const previousMatchesRef = useRef<Match[]>([]);
   const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
@@ -92,10 +105,19 @@ const useMatches = () => {
   }, [processMatches, setIsLoading, clearMatchTimeout]);
 
   return {
-    matches,
+    matches: filteredAndSortedMatches,
+    allMatches: matches,
     newMatches,
     removingMatches,
     isLoading,
+    searchTerm,
+    setSearchTerm,
+    selectedLeague,
+    setSelectedLeague,
+    sortOption,
+    setSortOption,
+    availableLeagues,
+    resetFilters,
   };
 };
 

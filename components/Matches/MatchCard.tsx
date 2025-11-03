@@ -106,7 +106,7 @@ const MatchCard = ({ match, isNew, isRemoving, isLoading }: MatchCardProps) => {
         <div className="flex justify-between items-center border-b border-gray-700 pb-2">
           <div className="flex flex-col">
             <span className="text-gray-400 text-xs font-medium uppercase tracking-wide">
-              {match.leadue}
+              {match.league}
             </span>
             <span className="text-gray-300 text-xs">
               {formatTime(match.matchTime)} • {match.venue}
