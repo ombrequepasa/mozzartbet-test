@@ -2,7 +2,6 @@
 
 import { useHydrateAtoms } from "jotai/utils";
 import { matchesAtom } from "@/store/matches";
-import useGetDynamicMatches from "@/hooks/useGetDynamicMatches";
 
 const MatchesProvider = ({
   initialMatches,
@@ -11,7 +10,6 @@ const MatchesProvider = ({
   initialMatches: [];
   children: React.ReactNode;
 }) => {
-  useGetDynamicMatches();
   useHydrateAtoms([[matchesAtom, initialMatches]]);
   return <>{children}</>;
 };

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mozzart Test",
+  title: "Mozzart Bet Test",
   description:
     "Technical interview assessment project demonstrating modern web development skills",
 };
