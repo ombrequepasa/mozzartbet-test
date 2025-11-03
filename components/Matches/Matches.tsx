@@ -5,7 +5,9 @@ import dynamic from "next/dynamic";
 import useMatches from "@/hooks/useMatches";
 
 const MatchesHeader = dynamic(() => import("./MatchesHeader"), { ssr: false });
-const MatchList = dynamic(() => import("./MatchList"), { ssr: false });
+const SmartMatchList = dynamic(() => import("./SmartMatchList"), {
+  ssr: false,
+});
 
 const Matches = () => {
   const {
@@ -41,7 +43,7 @@ const Matches = () => {
         isDisabled={allMatches.length === 0 && !isLoading}
       />
 
-      <MatchList
+      <SmartMatchList
         allMatches={allMatches}
         isLoading={isLoading}
         matches={matches}
