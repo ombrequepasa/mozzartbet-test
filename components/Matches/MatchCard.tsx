@@ -2,6 +2,9 @@
 
 import { memo } from "react";
 import { motion } from "framer-motion";
+import { Heart } from "lucide-react";
+import { useAtom } from "jotai";
+import { favoritesAtom } from "@/store/matches";
 import useMatchCardLayoutHelper from "@/hooks/useMatchCardLayoutHelper";
 import Spinner from "../Spinner";
 import { Match } from "@/types/matches";
@@ -21,6 +24,9 @@ const MatchCard = ({
   isLoading,
   fixedHeight,
 }: MatchCardProps) => {
+  const [favorites, setFavorites] = useAtom(favoritesAtom);
+  const isFavorite = favorites.has(match.id);
+
   const {
     formatTime,
     getAnimationStyles,
@@ -28,6 +34,17 @@ const MatchCard = ({
     getTransition,
     statusInfo,
   } = useMatchCardLayoutHelper(match, isNew, isRemoving);
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const newFavorites = new Set(favorites);
+    if (isFavorite) {
+      newFavorites.delete(match.id);
+    } else {
+      newFavorites.add(match.id);
+    }
+    setFavorites(newFavorites);
+  };
 
   return (
     <motion.div
@@ -110,6 +127,22 @@ const MatchCard = ({
           <Spinner size="sm" />
         </div>
       )}
+
+      <motion.button
+        onClick={toggleFavorite}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="absolute top-px right-px z-30 p-1.5 bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gray-700/80 transition-all duration-200 shadow-lg"
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}>
+        <Heart
+          size={14}
+          className={`transition-all cursor-pointer duration-200 ${
+            isFavorite
+              ? "fill-red-500 text-red-500"
+              : "text-gray-300 hover:text-red-400"
+          }`}
+        />
+      </motion.button>
 
       <div className="p-4 space-y-3 relative z-10">
         <div className="flex justify-between items-center border-b border-gray-700 pb-2">
